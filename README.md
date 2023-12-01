@@ -1,4 +1,4 @@
-# PKS-Discord-Bot
+``# PKS-Discord-Bot
 Music, Moderation, Levels, and Gambling.
 
 # Overview
