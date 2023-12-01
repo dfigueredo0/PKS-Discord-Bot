@@ -1,5 +1,6 @@
 <p align="center">  
-  # PKS-Discord-Bot
+  
+  #PKS-Discord-Bot
   
   Music, Moderation, Levels, and Gambling
 </p>
