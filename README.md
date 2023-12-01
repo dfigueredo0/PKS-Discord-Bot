@@ -1,5 +1,9 @@
-``# PKS-Discord-Bot
-Music, Moderation, Levels, and Gambling.
+<p align="center">
+  
+  # PKS-Discord-Bot
+  Music, Moderation, Levels, and Gambling.
+
+</p>
 
 # Overview
 This discord bot is a self-hosted bot. This bot has the ability to play music, adminstrate servers, establish levels with a ranking system as well as an economy to gamble away. 
