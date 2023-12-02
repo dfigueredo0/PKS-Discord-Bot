@@ -2,6 +2,7 @@ require('dotenv').config();
 const {Client, IntentsBitField } = require('discord.js');
 const mongoose = require('mongoose');
 const eventHandler = require('./handlers/eventHandler');
+const { Player } = require('discord-player');
 
 const client = new Client({
     intents: [
@@ -10,9 +11,17 @@ const client = new Client({
         IntentsBitField.Flags.GuildMessages,
         IntentsBitField.Flags.GuildPresences,
         IntentsBitField.Flags.MessageContent,
+        IntentsBitField.Flags.GuildVoiceStates,
     ]
 });
 
+/*client.player = new Player(client, {
+    ytdlOptions: {
+        quality: "highestaudio",
+        highWaterMark: 1 << 25
+    }
+});
+*/
 
 (async () => {
     try {
