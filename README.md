@@ -8,6 +8,6 @@ This discord bot is a self-hosted bot. This bot has the ability to play music, a
 The default set of modules includes and is not limited to:
 * Moderation features (kick/ban/, chat cleanup)
 * Music features (YouTube, Spotify, Queue, Playlist)
-* Economy (Balance, Slots, Poker, Blackjack)
-* Levels
+* Economy (Balance, Slots, Poker, Blackjack, Coin Flips)
+* Levels (Level, Ranks)
 * Custom Commands 
