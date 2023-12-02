@@ -19,8 +19,10 @@ function getRandomXP(min, max) {
 module.exports = async (client, message) => {
     if (!message.inGuild() || message.author.bot || cooldowns.has(message.author.id))
         return;
-
+    const channelID = '1180561667499765760';
     const xpToGive = getRandomXP(1, 100); 
+
+    const channel = member.guild.channels.cache.get(channelID);
 
     const query = {
         userID: message.author.id,
@@ -37,7 +39,7 @@ module.exports = async (client, message) => {
                 level.xp = 0;
                 level.level += 1;
 
-                message.channel.send(`${message.member} you have leveled up to **level ${level.level}**`);
+                channel.send(`${message.member} you have leveled up to **level ${level.level}**`);
             }
 
             await level.save().catch((e) => {

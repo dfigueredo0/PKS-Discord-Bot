@@ -68,7 +68,7 @@ const { Client, Interaction, ApplicationCommandOptionType, PermissionFlagsBits, 
       },
       {
         name: 'reason',
-        description: 'The reason you want to ban.',
+        description: 'The reason for banning.',
         type: ApplicationCommandOptionType.String,
       },
     ],
