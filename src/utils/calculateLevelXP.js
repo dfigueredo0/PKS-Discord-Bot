@@ -1,0 +1,1 @@
+module.exports = (level) => Math.ceil(100 * Math.pow(1.1, level)) || 1;
