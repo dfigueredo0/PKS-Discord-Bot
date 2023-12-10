@@ -3,8 +3,8 @@ const {
   Interaction,
   ApplicationCommandOptionType,
   EmbedBuilder,
-} = require("discord.js");
-const User = require("../../schemas/User");
+} = require('discord.js');
+const User = require('../../schemas/User');
 
 module.exports = {
   /**
@@ -15,7 +15,7 @@ module.exports = {
   callback: async (client, interaction) => {
     if (!interaction.inGuild()) {
       interaction.reply({
-        content: "You can only run this command inside a server.",
+        content: 'You can only run this command inside a server.',
         ephemeral: true,
       });
       return;
@@ -25,7 +25,9 @@ module.exports = {
       await interaction.deferReply();
 
       const targetUserID =
-        interaction.options.get("target-user")?.value || interaction.member.id;
+        interaction.options.get('target-user')?.value || interaction.member.id;
+
+      console.log(targetUserID);
 
       const user = await User.findOne({
         userID: targetUserID,
@@ -48,8 +50,9 @@ module.exports = {
                 name: interaction.member.displayName,
                 iconURL: memberAvatarURL,
               })
-              .setTitle("Balance")
-              .setDescription(`Your balance is $${user.balance}`),
+              .setTitle('Balance')
+              .setDescription(`Your balance is $${user.balance}`)
+              .setColor('Default'),
           ],
         });
       } else {
@@ -57,12 +60,16 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
               .setAuthor({
-                name: interaction.member.displayName,
-                iconURL: memberAvatarURL,
+                name: interaction.options.getUser('target-user').displayName,
+                iconURL: interaction.options
+                  .getUser('target-user')
+                  .displayAvatarURL({ dynamic: true }),
               })
-              .setTitle("Balance")
+              .setTitle('Balance')
               .setDescription(
-                `<@${targetUserID}>'s balance is $**${user.balance}**`
+                `${
+                  interaction.options.getUser('target-user').displayName
+                }'s balance is $**${user.balance}**`
               ),
           ],
         });
@@ -72,12 +79,12 @@ module.exports = {
     }
   },
 
-  name: "balance",
-  description: "Shows your balance or check the balanace of someone else.",
+  name: 'balance',
+  description: 'Shows your balance or check the balanace of someone else.',
   options: [
     {
-      name: "target-user",
-      description: "The user you want to check the balance of.",
+      name: 'target-user',
+      description: 'The user you want to check the balance of.',
       type: ApplicationCommandOptionType.User,
     },
   ],

@@ -1,5 +1,5 @@
-const { Client, Interaction, EmbedBuilder } = require("discord.js");
-const User = require("../../schemas/User");
+const { Client, Interaction, EmbedBuilder } = require('discord.js');
+const User = require('../../schemas/User');
 
 const allowanceAmount = 500;
 
@@ -12,7 +12,7 @@ module.exports = {
   callback: async (client, interaction) => {
     if (!interaction.inGuild()) {
       interaction.reply({
-        content: "You can only run this command inside a server.",
+        content: 'You can only run this command inside a server.',
         ephemeral: true,
       });
       return;
@@ -39,7 +39,7 @@ module.exports = {
 
         if (lastDailyDate === currentDate) {
           interaction.editReply(
-            "You have already collected you allowance today. Come back tomorrow."
+            'You have already collected you allowance today. Come back tomorrow.'
           );
           return;
         }
@@ -59,6 +59,7 @@ module.exports = {
       await user.save();
       if (user.streak === 0) {
         user.balance += allowanceAmount;
+        await user.save();
         interaction.editReply(
           {
             embeds: [
@@ -67,12 +68,12 @@ module.exports = {
                   name: interaction.member.displayName,
                   iconURL: memberAvatarURL,
                 })
-                .setTitle("Daily Claimed")
-                .setDescription(`+ $${user.balance}`)
+                .setTitle('Daily Claimed')
+                .setDescription(`+ $${allowanceAmount}`)
                 .addFields([
                   {
-                    name: "Streak",
-                    value: ":o: :o: :o: :o: :o:",
+                    name: 'Streak',
+                    value: ':o: :o: :o: :o: :o:',
                     inline: true,
                   },
                 ]),
@@ -83,6 +84,7 @@ module.exports = {
       } else if (user.streak === 1) {
         allowanceAmount = allowanceAmount * 1.2;
         user.balance += allowanceAmount;
+        await user.save();
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -90,12 +92,12 @@ module.exports = {
                 name: interaction.member.displayName,
                 iconURL: memberAvatarURL,
               })
-              .setTitle("Daily Claimed")
-              .setDescription(`+ $${user.balance}`)
+              .setTitle('Daily Claimed')
+              .setDescription(`+ $${allowanceAmount}`)
               .addFields([
                 {
-                  name: "Streak",
-                  value: ":red_circle: :o: :o: :o: :o:",
+                  name: 'Streak',
+                  value: '<a:Streak:1183431077071683664> :o: :o: :o: :o:',
                   inline: true,
                 },
               ]),
@@ -104,6 +106,7 @@ module.exports = {
       } else if (user.streak === 2) {
         allowanceAmount = allowanceAmount * 1.4;
         user.balance += allowanceAmount;
+        await user.save();
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -111,12 +114,12 @@ module.exports = {
                 name: interaction.member.displayName,
                 iconURL: memberAvatarURL,
               })
-              .setTitle("Daily Claimed")
-              .setDescription(`+ $${user.balance}`)
+              .setTitle('Daily Claimed')
+              .setDescription(`+ $${allowanceAmount}`)
               .addFields([
                 {
-                  name: "Streak",
-                  value: ":red_circle: :o: :o: :o: :o:",
+                  name: 'Streak',
+                  value: '<a:Streak:1183431077071683664> :o: :o: :o: :o:',
                   inline: true,
                 },
               ]),
@@ -125,6 +128,7 @@ module.exports = {
       } else if (user.streak === 3) {
         allowanceAmount = allowanceAmount * 1.6;
         user.balance += allowanceAmount;
+        await user.save();
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -132,12 +136,13 @@ module.exports = {
                 name: interaction.member.displayName,
                 iconURL: memberAvatarURL,
               })
-              .setTitle("Daily Claimed")
-              .setDescription(`+ $${user.balance}`)
+              .setTitle('Daily Claimed')
+              .setDescription(`+ $${allowanceAmount}`)
               .addFields([
                 {
-                  name: "Streak",
-                  value: ":red_circle: :red_circle: :red_circle: :o: :o:",
+                  name: 'Streak',
+                  value:
+                    '<a:Streak:1183431077071683664> <a:Streak:1183431077071683664> <a:Streak:1183431077071683664> :o: :o:',
                   inline: true,
                 },
               ]),
@@ -146,6 +151,7 @@ module.exports = {
       } else if (user.streak === 4) {
         allowanceAmount = allowanceAmount * 1.8;
         user.balance += allowanceAmount;
+        await user.save();
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -153,13 +159,13 @@ module.exports = {
                 name: interaction.member.displayName,
                 iconURL: memberAvatarURL,
               })
-              .setTitle("Daily Claimed")
-              .setDescription(`+ $${user.balance}`)
+              .setTitle('Daily Claimed')
+              .setDescription(`+ $${allowanceAmount}`)
               .addFields([
                 {
-                  name: "Streak",
+                  name: 'Streak',
                   value:
-                    ":red_circle: :red_circle: :red_circle: :red_circle: :o:",
+                    '<a:Streak:1183431077071683664> <a:Streak:1183431077071683664> <a:Streak:1183431077071683664> <a:Streak:1183431077071683664> :o:',
                   inline: true,
                 },
               ]),
@@ -168,6 +174,7 @@ module.exports = {
       } else {
         allowanceAmount = allowanceAmount * 2;
         user.balance += allowanceAmount;
+        await user.save();
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -175,13 +182,13 @@ module.exports = {
                 name: interaction.member.displayName,
                 iconURL: memberAvatarURL,
               })
-              .setTitle("Daily Claimed")
-              .setDescription(`+ $${user.balance}`)
+              .setTitle('Daily Claimed')
+              .setDescription(`+ $${allowanceAmount}`)
               .addFields([
                 {
-                  name: "Streak",
+                  name: 'Streak',
                   value:
-                    ":red_circle: :red_circle: :red_circle: :red_circle: :red_circle:",
+                    '<a:Streak:1183431077071683664> <a:Streak:1183431077071683664> <a:Streak:1183431077071683664> <a:Streak:1183431077071683664> <a:Streak:1183431077071683664>',
                   inline: true,
                 },
               ]),
@@ -193,6 +200,6 @@ module.exports = {
     }
   },
 
-  name: "daily",
-  description: "Calim your daily reward.",
+  name: 'daily',
+  description: 'Calim your daily reward.',
 };
