@@ -1,7 +1,7 @@
 const { Client, Interaction, EmbedBuilder } = require('discord.js');
 const User = require('../../schemas/User');
 
-const allowanceAmount = 500;
+const dailyAmount = 500;
 
 module.exports = {
   /**
@@ -52,39 +52,7 @@ module.exports = {
         });
       }
 
-      user.streak =
-        Date.now() - user.lastDaily.getDate() < 2 * dayInMillis
-          ? user.streak + 1
-          : 0;
-      await user.save();
       if (user.streak === 0) {
-        user.balance += allowanceAmount;
-        await user.save();
-        interaction.editReply(
-          {
-            embeds: [
-              new EmbedBuilder()
-                .setAuthor({
-                  name: interaction.member.displayName,
-                  iconURL: memberAvatarURL,
-                })
-                .setTitle('Daily Claimed')
-                .setDescription(`+ $${allowanceAmount}`)
-                .addFields([
-                  {
-                    name: 'Streak',
-                    value: ':o: :o: :o: :o: :o:',
-                    inline: true,
-                  },
-                ]),
-            ],
-          }
-          //`$${allowanceAmount} was added to your balance. Your new balance is $${user.balance}`
-        );
-      } else if (user.streak === 1) {
-        allowanceAmount = allowanceAmount * 1.2;
-        user.balance += allowanceAmount;
-        await user.save();
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -93,7 +61,28 @@ module.exports = {
                 iconURL: memberAvatarURL,
               })
               .setTitle('Daily Claimed')
-              .setDescription(`+ $${allowanceAmount}`)
+              .setDescription(`+ $${dailyAmount}`)
+              .addFields([
+                {
+                  name: 'Streak',
+                  value: ':o: :o: :o: :o: :o:',
+                  inline: true,
+                },
+              ]),
+          ],
+        });
+      } else if (user.streak === 1) {
+        dailyAmount = dailyAmount * 1.2;
+
+        interaction.editReply({
+          embeds: [
+            new EmbedBuilder()
+              .setAuthor({
+                name: interaction.member.displayName,
+                iconURL: memberAvatarURL,
+              })
+              .setTitle('Daily Claimed')
+              .setDescription(`+ $${dailyAmount}`)
               .addFields([
                 {
                   name: 'Streak',
@@ -104,9 +93,8 @@ module.exports = {
           ],
         });
       } else if (user.streak === 2) {
-        allowanceAmount = allowanceAmount * 1.4;
-        user.balance += allowanceAmount;
-        await user.save();
+        dailyAmount = dailyAmount * 1.4;
+
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -115,7 +103,7 @@ module.exports = {
                 iconURL: memberAvatarURL,
               })
               .setTitle('Daily Claimed')
-              .setDescription(`+ $${allowanceAmount}`)
+              .setDescription(`+ $${dailyAmount}`)
               .addFields([
                 {
                   name: 'Streak',
@@ -126,9 +114,8 @@ module.exports = {
           ],
         });
       } else if (user.streak === 3) {
-        allowanceAmount = allowanceAmount * 1.6;
-        user.balance += allowanceAmount;
-        await user.save();
+        dailyAmount = dailyAmount * 1.6;
+
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -137,7 +124,7 @@ module.exports = {
                 iconURL: memberAvatarURL,
               })
               .setTitle('Daily Claimed')
-              .setDescription(`+ $${allowanceAmount}`)
+              .setDescription(`+ $${dailyAmount}`)
               .addFields([
                 {
                   name: 'Streak',
@@ -149,9 +136,8 @@ module.exports = {
           ],
         });
       } else if (user.streak === 4) {
-        allowanceAmount = allowanceAmount * 1.8;
-        user.balance += allowanceAmount;
-        await user.save();
+        dailyAmount = dailyAmount * 1.8;
+
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -160,7 +146,7 @@ module.exports = {
                 iconURL: memberAvatarURL,
               })
               .setTitle('Daily Claimed')
-              .setDescription(`+ $${allowanceAmount}`)
+              .setDescription(`+ $${dailyAmount}`)
               .addFields([
                 {
                   name: 'Streak',
@@ -172,9 +158,8 @@ module.exports = {
           ],
         });
       } else {
-        allowanceAmount = allowanceAmount * 2;
-        user.balance += allowanceAmount;
-        await user.save();
+        dailyAmount = dailyAmount * 2;
+
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -183,7 +168,7 @@ module.exports = {
                 iconURL: memberAvatarURL,
               })
               .setTitle('Daily Claimed')
-              .setDescription(`+ $${allowanceAmount}`)
+              .setDescription(`+ $${dailyAmount}`)
               .addFields([
                 {
                   name: 'Streak',
@@ -195,6 +180,13 @@ module.exports = {
           ],
         });
       }
+
+      user.balance += dailyAmount;
+      user.streak =
+        Date.now() - user.lastDaily.getDate() < 2 * dayInMillis
+          ? user.streak + 1
+          : 1;
+      await user.save();
     } catch (error) {
       console.log(`${error}`);
     }
