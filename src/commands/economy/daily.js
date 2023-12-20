@@ -1,7 +1,7 @@
 const { Client, Interaction, EmbedBuilder } = require('discord.js');
 const User = require('../../schemas/User');
 
-const dailyAmount = 500;
+var dailyAmount = 500;
 
 module.exports = {
   /**
@@ -36,13 +36,14 @@ module.exports = {
       if (user) {
         const lastDailyDate = user.lastDaily.toDateString();
         const currentDate = new Date().toDateString();
+        var currDate = new Date();
 
-        if (lastDailyDate === currentDate) {
+        /* if (lastDailyDate === currentDate) {
           interaction.editReply(
             'You have already collected you allowance today. Come back tomorrow.'
           );
           return;
-        }
+        }*/
 
         user.lastDaily = new Date();
       } else {
@@ -53,6 +54,14 @@ module.exports = {
       }
 
       if (user.streak === 0) {
+        user.balance += dailyAmount;
+        user.streak =
+          currDate.getMilliseconds() - user.lastDaily.getMilliseconds <
+          2 * dayInMillis
+            ? user.streak + 1
+            : 1;
+        await user.save();
+
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
@@ -73,6 +82,13 @@ module.exports = {
         });
       } else if (user.streak === 1) {
         dailyAmount = dailyAmount * 1.2;
+        user.balance += dailyAmount;
+        user.streak =
+          currDate.getMilliseconds() - user.lastDaily.getMilliseconds <
+          2 * dayInMillis
+            ? user.streak + 1
+            : 1;
+        await user.save();
 
         interaction.editReply({
           embeds: [
@@ -94,6 +110,13 @@ module.exports = {
         });
       } else if (user.streak === 2) {
         dailyAmount = dailyAmount * 1.4;
+        user.balance += dailyAmount;
+        user.streak =
+          currDate.getMilliseconds() - user.lastDaily.getMilliseconds <
+          2 * dayInMillis
+            ? user.streak + 1
+            : 1;
+        await user.save();
 
         interaction.editReply({
           embeds: [
@@ -115,6 +138,13 @@ module.exports = {
         });
       } else if (user.streak === 3) {
         dailyAmount = dailyAmount * 1.6;
+        user.balance += dailyAmount;
+        user.streak =
+          currDate.getMilliseconds() - user.lastDaily.getMilliseconds <
+          2 * dayInMillis
+            ? user.streak + 1
+            : 1;
+        await user.save();
 
         interaction.editReply({
           embeds: [
@@ -137,6 +167,13 @@ module.exports = {
         });
       } else if (user.streak === 4) {
         dailyAmount = dailyAmount * 1.8;
+        user.balance += dailyAmount;
+        user.streak =
+          currDate.getMilliseconds() - user.lastDaily.getMilliseconds <
+          2 * dayInMillis
+            ? user.streak + 1
+            : 1;
+        await user.save();
 
         interaction.editReply({
           embeds: [
@@ -159,6 +196,13 @@ module.exports = {
         });
       } else {
         dailyAmount = dailyAmount * 2;
+        user.balance += dailyAmount;
+        user.streak =
+          currDate.getMilliseconds() - user.lastDaily.getMilliseconds <
+          2 * dayInMillis
+            ? user.streak + 1
+            : 1;
+        await user.save();
 
         interaction.editReply({
           embeds: [
@@ -180,13 +224,6 @@ module.exports = {
           ],
         });
       }
-
-      user.balance += dailyAmount;
-      user.streak =
-        Date.now() - user.lastDaily.getDate() < 2 * dayInMillis
-          ? user.streak + 1
-          : 1;
-      await user.save();
     } catch (error) {
       console.log(`${error}`);
     }
